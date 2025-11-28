@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>Form İndir Örneği</title>
+</head>
+<body>
+<h2 align="center">Formu doldur </h2>
+<form id="myForm">
+    <table border="2" align="center" bgcolor="pink" size="">
+        <TR>
+    <td>Ad: <input type="text" name="ad" required></td>><br>
+        </TR>
+        <tr>
+            <td>11 haneli tckn  <input type="text" name="tckn" maxlength="11"> </td><br>
+        </tr>
+
+        <tr>
+            <td>E-posta: <input type="email" name="email" required> </td><br>
+
+        </tr>
+
+<tr>
+    <td> <input type="submit" align="top"> </input></td>
+</tr>
+
+
+
+    </table>
+</form>
+
+
+<script>
+    document.getElementById('myForm').addEventListener('submit', function(e) {
+      e.preventDefault(); // Sayfanın yenilenmesini engelle
+
+      // Form verilerini al
+      const fd = new FormData(e.target);
+      const obj = Object.fromEntries(fd.entries());
+
+      // JSON formatına çevir
+      const json = JSON.stringify(obj, null, 2);
+
+      // Dosya oluştur
+      const blob = new Blob([json], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+
+      // İndirme tetikle
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'form-verileri.json'; // Dosya adı
+      a.click();
+
+      // Belleği temizle
+      URL.revokeObjectURL(url);
+    });
+</script>
+</body>
+</html>
